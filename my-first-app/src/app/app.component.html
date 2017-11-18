@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Inside component</h3>
+      <hr/>
+      <app-servers></app-servers>
+
+      <div class="panel-group" id="collapse-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Alerts</a>
+            </h4>
+          </div>
+          <div id="el1" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <app-warming-alert></app-warming-alert>
+              <app-succes-allert></app-succes-allert>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#collapse-group" href="#el2">Bindings</a>
+            </h4>
+          </div>
+          <div id="el2" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <app-binding-test></app-binding-test>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#collapse-group" href="#el3">Directives</a>
+            </h4>
+          </div>
+          <div id="el3" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <app-directive-test></app-directive-test>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
+        <p class="panel-heading panel">Alerts</p>
+
+        <p class="panel-heading panel">Bindings</p>
+        <app-binding-test></app-binding-test>
+        <div class="panel-collapse in">
+          <div class="panel-heading panel ">Directives</div>
+          <app-directive-test></app-directive-test>
+        </div>
+-->
+

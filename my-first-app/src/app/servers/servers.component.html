@@ -1,0 +1,13 @@
+<form class="navbar-form">
+<label>Server name:</label>
+<input type="text" class="form-control" (input)="onUpdateServerName($event)" />
+<button class="btn btn-primary" [disabled] = "!allowNewServers" (click)="onCreateServer()">Add new server</button>
+</form>
+
+<!--<p>{{serverCreationStatus}}</p>-->
+<p *ngIf="serverCreated; else noServer">Server was created. Server name is {{serverName}}</p>
+<ng-template>
+  <p #noServer>No server was created</p>
+</ng-template>
+
+<app-server *ngFor="let server of servers"></app-server>

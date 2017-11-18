@@ -1,0 +1,9 @@
+<button class="btn btn-primary" (click)="toggleDetails($event)" [innerText]="visible ? 'Hide details' : 'Display details'"></button>
+<div [hidden]="!visible">Lorem ipsum dolor sit amet, mundi nusquam euripidis et pri, probatus pertinacia cum et. Diam doctus vivendum te
+  sit, te mutat menandri qui, vel purto albucius eleifend ei. At enim iriure sapientem pri, sed doctus patrioque
+  consequat ea, magna interpretaris qui eu. Omnis perfecto vituperata qui ex. Aperiri blandit ei has, stet omnes in duo,
+  sed ne everti euismod meliore. Mei te vocent vituperatoribus, ne pri probo mollis.
+</div>
+<div [ngClass]="{logTail: clickCount >= 5}"
+     [ngStyle]="{backgroundColor: clickCount >= 5 ? 'blue' : ''}">{{clickLog}}
+</div>
