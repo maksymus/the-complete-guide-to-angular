@@ -1,12 +1,13 @@
 import {Recipe} from './recipe.model';
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable, OnInit} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list/shopping-list.service';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
-export class RecipeService {
+export class RecipeService implements OnInit {
   private recipes: Recipe[] = [
     new Recipe('Tasty Schnitzel',
       'A super-tasty schnitzel - just awesome!!!',
@@ -25,7 +26,12 @@ export class RecipeService {
     )
   ];
 
+  recipesChanged = new Subject<Recipe[]>();
+
   constructor(private shoppingListService: ShoppingListService) {}
+
+  ngOnInit(): void {
+  }
 
   getRecipes() {
     return this.recipes.slice();
@@ -38,6 +44,17 @@ export class RecipeService {
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes);
+  }
+
+  updateRecipe(id: number, recipe: Recipe) {
+    this.recipes[id] = recipe;
+    this.recipesChanged.next(this.recipes);
+  }
+
 }
 
 @Injectable()
@@ -45,6 +62,7 @@ export class RecipeResolver implements Resolve<Recipe> {
   constructor(private recipeService: RecipeService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe> | Promise<Recipe> | Recipe {
-    return this.recipeService.getRecipe(+route.params['id']);
+    const recipe = this.recipeService.getRecipe(+route.params['id']);
+    return recipe;
   }
 }
