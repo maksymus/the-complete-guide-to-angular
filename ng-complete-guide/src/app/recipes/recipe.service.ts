@@ -41,10 +41,6 @@ export class RecipeService implements OnInit {
     return this.recipes[id];
   }
 
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredients(ingredients);
-  }
-
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
     this.recipesChanged.next(this.recipes);
@@ -53,6 +49,15 @@ export class RecipeService implements OnInit {
   updateRecipe(id: number, recipe: Recipe) {
     this.recipes[id] = recipe;
     this.recipesChanged.next(this.recipes);
+  }
+
+  deleteRecipe(id: number) {
+    this.recipes.splice(id, 1);
+    this.recipesChanged.next(this.recipes);
+  }
+
+  addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    this.shoppingListService.addIngredients(ingredients);
   }
 
 }
