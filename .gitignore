@@ -1,2 +1,7 @@
 the-complete-guide-to-angular.iml
 .idea
+
+# dependencies
+/node_modules
+
+package-lock.json

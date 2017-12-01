@@ -17,12 +17,16 @@ export class AuthService implements OnInit {
   }
 
   signinUser(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((response) => {
         firebase.auth().currentUser.getToken().then(
           token => this.token = token);
-      })
-      .catch((error) => console.log(error));
+      });
+  }
+
+  logout() {
+    firebase.auth().signOut();
+    this.token = null;
   }
 
   getToken() {
