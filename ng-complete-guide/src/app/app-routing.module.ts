@@ -5,15 +5,15 @@ import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {SigninComponent} from './auth/signin/signin.component';
 import {AuthGuard} from './auth/auth.guard';
+import {HomeComponent} from "./home/home.component";
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/recipes', pathMatch: 'full' },
+  // { path: '', redirectTo: '/recipes', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
+  { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule'}, // lazy loading
   { path: 'shopping-list', component: ShoppingListComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: SigninComponent },
-  // // { path: 'page-not-found', component: PageNotFoundComponent },
-  // { path: 'page-not-found', component: PageErrorComponent, data: {message: 'Page Not Found'} },
-  // { path: '**', redirectTo: '/page-not-found' },
 ];
 
 @NgModule ({
