@@ -12,6 +12,7 @@ import {DropdownDirective} from "./dropdown.directive";
   exports: [
     CommonModule,
     DropdownDirective
-  ]
+  ],
+  providers: []   // NEVER add providers (services) to shared modules !!!!
 })
 export class SharedModule { }
