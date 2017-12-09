@@ -16,20 +16,28 @@ export class DataStorageService {
   constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {}
 
   storeRecipes() {
-    const token = this.authService.getToken();
-    const httpParams = new HttpParams().append('auth', token);
+    // const token = this.authService.getToken();
+    // const httpParams = new HttpParams().append('auth', token);
+    // return this.http.put(this.RECIPES_STORAGE, this.recipeService.getRecipes(), { params: httpParams });
 
-    return this.http.put(this.RECIPES_STORAGE, this.recipeService.getRecipes(), { params: httpParams });
+    return this.http.put(this.RECIPES_STORAGE, this.recipeService.getRecipes());
   }
 
   fetchRecipes() {
-    const token = this.authService.getToken();
-    const httpParams = new HttpParams().append('auth', token);
+    // const token = this.authService.getToken();
+    // const httpParams = new HttpParams().append('auth', token);
+    //
+    // return this.http.get(this.RECIPES_STORAGE, { observe: 'body', responseType: 'json', params: httpParams })
+    //   .subscribe(
+    //     (recipes: Recipe[]) => this.recipeService.setRecipes(recipes),
+    //     (error: Response) => console.log(error)
+    //     );
 
-    return this.http.get(this.RECIPES_STORAGE, { observe: 'body', responseType: 'json', params: httpParams })
+    return this.http.get(this.RECIPES_STORAGE, { observe: 'body', responseType: 'json'})
       .subscribe(
         (recipes: Recipe[]) => this.recipeService.setRecipes(recipes),
         (error: Response) => console.log(error)
-        );
+      );
+
   }
 }
