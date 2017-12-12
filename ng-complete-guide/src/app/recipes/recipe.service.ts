@@ -1,10 +1,10 @@
 import {Recipe} from './recipe.model';
-import {EventEmitter, Injectable, OnInit} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
-import {ShoppingListService} from '../shopping-list/shopping-list.service';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class RecipeService implements OnInit {
@@ -28,7 +28,7 @@ export class RecipeService implements OnInit {
 
   recipesChanged = new Subject<Recipe[]>();
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {}
 
   ngOnInit(): void {
   }
@@ -60,11 +60,6 @@ export class RecipeService implements OnInit {
     this.recipes.splice(id, 1);
     this.recipesChanged.next(this.recipes);
   }
-
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredients(ingredients);
-  }
-
 }
 
 @Injectable()
