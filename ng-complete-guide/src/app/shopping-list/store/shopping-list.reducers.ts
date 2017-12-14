@@ -1,11 +1,23 @@
 import {Ingredient} from "../../shared/ingredient.model";
 import * as ShoppingListActions from "./shopping-list.actions";
 
-const initialState = {
+export interface AppState {
+  shoppingList: State
+}
+
+export interface State {
+  ingredients: Ingredient[],
+  editedIngredient: Ingredient,
+  editedIngredientIndex: number
+}
+
+const initialState: State = {
   ingredients: [
     new Ingredient('Apples', 6),
     new Ingredient('Tomatoes', 10)
-  ]
+  ],
+  editedIngredient: null,
+  editedIngredientIndex: -1
 };
 
 export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
@@ -23,26 +35,43 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
     case ShoppingListActions.UPDATE_INGREDIENT:
       const ingredients = [...state.ingredients];
 
-      const ingredient = ingredients[action.payload.index];
+      const ingredient = ingredients[state.editedIngredientIndex];
       const updatedIngredient = {
         ...ingredient,
         ...action.payload.ingredient
       };
 
-      ingredients[action.payload.index] = updatedIngredient;
+      ingredients[state.editedIngredientIndex] = updatedIngredient;
 
       return {
         ...state,
-        ingredients: ingredients
+        ingredients: ingredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     case ShoppingListActions.DELETE_INGREDIENT:
       const oldIngredients = [...state.ingredients];
-      oldIngredients.splice(action.payload, 1);
+      oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
         ...state,
-        ingredients: oldIngredients
+        ingredients: oldIngredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
-
+    case ShoppingListActions.START_EDIT_INGREDIENT:
+      const index = action.payload;
+      const editIngredients = [...state.ingredients];
+      return {
+        ...state,
+        editedIngredient: editIngredients[index],
+        editedIngredientIndex: index
+      };
+    case ShoppingListActions.STOP_EDIT_INGREDIENT:
+      return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
+      };
     default:
       return state;
   }
