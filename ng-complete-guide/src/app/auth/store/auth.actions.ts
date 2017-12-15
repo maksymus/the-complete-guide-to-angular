@@ -12,12 +12,10 @@ export class Signup implements Action {
 
 export class Signin implements Action {
   readonly type = SIGNIN;
-  constructor(public payload: any) {}
 }
 
 export class Logout implements Action {
   readonly type = LOGOUT;
-  constructor(public payload: any) {}
 }
 
 export class SetToken implements Action {
