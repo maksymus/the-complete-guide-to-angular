@@ -8,6 +8,8 @@ import {DataStorageService} from '../../shared/data-storage.service';
 import {AuthService} from '../../auth/auth.service';
 import {AppState} from "../../store/app.reducers";
 import {State} from '../../auth/store/auth.reducers';
+import {Logout} from "../../auth/store/auth.actions";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-header',
@@ -39,7 +41,9 @@ export class HeaderComponent implements OnInit {
   }
 
   onSignOut() {
-    this.authService.logout();
-    this.router.navigate(['/']);
+    this.store.dispatch(new Logout());
+
+    // this.authService.logout();
+    // this.router.navigate(['/']);
   }
 }

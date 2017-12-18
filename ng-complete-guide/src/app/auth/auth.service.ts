@@ -4,6 +4,9 @@ import {AppState} from "../store/app.reducers";
 import {Store} from "@ngrx/store";
 import {Logout, SetToken, Signin, Signup} from "./store/auth.actions";
 
+/**
+ * Deprecated by Redux state/effects.
+ */
 @Injectable()
 export class AuthService implements OnInit {
 

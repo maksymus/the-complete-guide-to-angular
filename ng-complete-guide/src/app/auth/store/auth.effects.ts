@@ -5,9 +5,11 @@ import * as firebase from 'firebase';
 import {fromPromise} from "rxjs/observable/fromPromise";
 
 import {
+  LOGOUT,
   SET_TOKEN, SetToken, Signin, SIGNIN, SIGNUP, TRY_SIGNIN, TRY_SIGNUP, TrySignin,
   TrySignup
 } from "./auth.actions";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
@@ -48,6 +50,7 @@ export class AuthEffects {
       return fromPromise(authTokenPromise);
     })
     .mergeMap((token) => {
+      this.router.navigate(['/']);
       return [
         {
           type: SIGNIN
@@ -59,7 +62,12 @@ export class AuthEffects {
       ];
     });
 
+  @Effect({dispatch: false})
+  authLogout = this.actions$
+    .ofType(LOGOUT)
+    .do(() => {
+      this.router.navigate(['/']);
+    });
 
-
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private router: Router) {}
 }
