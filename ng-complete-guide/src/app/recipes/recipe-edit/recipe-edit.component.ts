@@ -4,6 +4,9 @@ import {Recipe} from '../recipe.model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Ingredient} from '../../shared/ingredient.model';
 import {RecipeService} from '../recipe.service';
+import {FeatureState} from "../store/recipe.reducers";
+import {Store} from "@ngrx/store";
+import {AddRecipe, UpdateRecipe} from "../store/recipe.actions";
 
 
 @Component({
@@ -22,7 +25,7 @@ export class RecipeEditComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
-              private recipeService: RecipeService) {}
+              private store: Store<FeatureState>) {}
 
   ngOnInit() {
     this.editMode = false;
@@ -42,9 +45,9 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit() {
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value as Recipe);
+      this.store.dispatch(new UpdateRecipe({index: this.id, recipe: this.recipeForm.value as Recipe}));
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value as Recipe);
+      this.store.dispatch(new AddRecipe(this.recipeForm.value as Recipe));
     }
 
     this.router.navigate(['..'], {relativeTo: this.route});
@@ -52,11 +55,6 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['..'], {relativeTo: this.route});
-  }
-
-  onDelete() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['/recipes']);
   }
 
   onAddIngredient() {

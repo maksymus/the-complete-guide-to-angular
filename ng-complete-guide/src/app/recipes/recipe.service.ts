@@ -5,6 +5,7 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Store} from "@ngrx/store";
+import {FeatureState} from "./store/recipe.reducers";
 
 @Injectable()
 export class RecipeService implements OnInit {
@@ -64,10 +65,10 @@ export class RecipeService implements OnInit {
 
 @Injectable()
 export class RecipeResolver implements Resolve<Recipe> {
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private store: Store<FeatureState>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe> | Promise<Recipe> | Recipe {
-    const recipe = this.recipeService.getRecipe(+route.params['id']);
+    const recipe = this.store.select('recipes').take(1).map(state => state.recipes[+route.params['id']]);
     return recipe;
   }
 }
