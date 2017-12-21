@@ -13,14 +13,14 @@ export class DataStorageService {
 
   private RECIPES_STORAGE = 'https://ng-complete-guide-74b69.firebaseio.com/recipes.json';
 
-  constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
-  storeRecipes() {
+  storeRecipes(recipes: Recipe[]) {
     // const token = this.authService.getToken();
     // const httpParams = new HttpParams().append('auth', token);
     // return this.http.put(this.RECIPES_STORAGE, this.recipeService.getRecipes(), { params: httpParams });
 
-    return this.http.put(this.RECIPES_STORAGE, this.recipeService.getRecipes());
+    return this.http.put(this.RECIPES_STORAGE, recipes);
   }
 
   fetchRecipes() {
@@ -33,11 +33,6 @@ export class DataStorageService {
     //     (error: Response) => console.log(error)
     //     );
 
-    return this.http.get(this.RECIPES_STORAGE, { observe: 'body', responseType: 'json'})
-      .subscribe(
-        (recipes: Recipe[]) => this.recipeService.setRecipes(recipes),
-        (error: Response) => console.log(error)
-      );
-
+    return this.http.get(this.RECIPES_STORAGE, { observe: 'body', responseType: 'json'});
   }
 }

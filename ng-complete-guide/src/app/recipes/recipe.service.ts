@@ -29,8 +29,6 @@ export class RecipeService implements OnInit {
 
   recipesChanged = new Subject<Recipe[]>();
 
-  constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {}
-
   ngOnInit(): void {
   }
 
